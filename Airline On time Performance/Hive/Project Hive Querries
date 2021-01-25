@@ -1,0 +1,40 @@
+Hive Querries
+
+create table aviation(
+year INT,
+month INT,
+flight_num INT,
+origin STRING,
+destination STRING,
+cancelled INT,
+cancel_code INT,
+diversion INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
+
+STORE relation_name INTO ‘hive_table’ USING org.apache.hive.hcatalog.pig .HCatStorer();
+
+
+Which month have seen the most number of cancellation due to bad weather?
+
+SELECT origin,COUNT(canceled) as t FROM aviation
+WHERE canceled = 1 AND canel_code = ‘B’
+GROUP BY month
+ORDER BY t DESC
+LIMIT 1;
+
+Top 10 route(origin and dest) that has seen maximum diversions?
+
+SELECT origin,dest,COUNT(diversion) as t FROM aviation
+WHERE diversion = 1
+GROUP BY origin,dest
+ORDER BY t DESC
+LIMIT 10;
+
+
+Top 5 visited destination.
+
+SELECT dest,COUNT(dest) as x FROM aviation
+GROUP BY dest
+ORDER BY x DESC
+LIMIT 5;
+

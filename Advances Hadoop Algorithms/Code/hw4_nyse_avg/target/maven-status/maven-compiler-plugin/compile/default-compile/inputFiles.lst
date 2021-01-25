@@ -1,0 +1,4 @@
+/home/kchaudhary/eclipse-workspace/hw4_nyse_avg/src/main/java/Hadoop/hw4_nyse_avg/CompositeKeyWritable.java
+/home/kchaudhary/eclipse-workspace/hw4_nyse_avg/src/main/java/Hadoop/hw4_nyse_avg/AverageReducer.java
+/home/kchaudhary/eclipse-workspace/hw4_nyse_avg/src/main/java/Hadoop/hw4_nyse_avg/AverageMapper.java
+/home/kchaudhary/eclipse-workspace/hw4_nyse_avg/src/main/java/Hadoop/hw4_nyse_avg/App.java

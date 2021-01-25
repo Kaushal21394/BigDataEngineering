@@ -1,0 +1,109 @@
+var mapper = function(){ emit(this.stock_symbol,this.stock_price_high); };
+var reducer = function(key,value){ return key, Array.avg(value); };
+db.nyse.mapReduce(mapper,reducer,{out:"AvgStocksHighPrice"})
+
+var mapper = function(){ emit(this.stock_symbol, {"count":1, "sum":this.stock_price_high}); };
+
+var reducer = function(key, value){reducedVal = {"count":0,"sum":0};
+ for(var i=0; i<value.length; i++){
+ reducedVal.count += value[i].count;
+ reducedVal.sum += value[i].sum;
+ }
+ return reducedVal;
+ };
+ 
+var finalizer = function(key, reducedVal){
+reducedVal.avg = reducedVal.sum / reducedVal.count;
+return reducedVal;
+}; 
+db.nyseprices.mapReduce(mapper, reducer, {out :"finalizedOutput", finalize: finalizer})
+
+
+var mapper = function(){
+emit(this.stock_symbol,
+{"count":1,
+"sum_open":this.stock_price_open,
+"sum_high":this.stock_price_high,
+"sum_close":this.stock_price_close,
+"sum_low":this.stock_price_low,
+"sum_adjusted":this.stock_price_adj_close});
+};
+
+var reducer = function(key,value){
+avg_price = {
+"count":0,
+"sum_open":0,
+"sum_close":0,
+"sum_high":0,
+"sum_low":0,
+"sum_adjusted":0};
+
+for(var i=0;i<value.length;i++){
+avg_price.count += value[i].count;
+avg_price.sum_open += value[i].sum_open;
+avg_price.sum_close += value[i].sum_close;
+avg_price.sum_high += value[i].sum_high;
+avg_price.sum_low += value[i].sum_low;
+avg_price.sum_adjusted += value[i].sum_adjusted;}
+return avg_price;
+};
+
+var finalizer = function(key,avg_price){
+final_avg = {
+"avg_open" :0,
+"avg_close":0,
+"avg_low":0,
+"avg_adjusted":0,
+"avg_high":0,
+}
+final_avg.avg_open = avg_price.sum_open/avg_price.count;
+final_avg.avg_close = avg_price.sum_close/avg_price.count;
+final_avg.avg_high = avg_price.sum_high/avg_price.count;
+final_avg.avg_low = avg_price.sum_low/avg_price.count;
+final_avg.avg_adjusted = avg_price.sum_adjusted/avg_price.count;
+return final_avg;
+};
+
+
+var mapper = function(){
+emit(this.Gender,1);
+};
+
+var reducer = function(key,value){
+return key,Array.sum(value);
+};
+
+var mapper = function(){
+emit(this.UserID,1);
+};
+
+var reducer = function(key,value){
+return key,Array.sum(value);
+};
+
+
+var mapper = function(){
+emit(this.MovieID,{"count":1,"sum":parseInt(this.Rating)});};
+
+var reducer = function(key,value){
+rating_val = {
+"count":0,
+"sum":0
+}
+for(var i=0;i<value.length;i++){
+rating_val.count += value[i].count;
+rating_val.sum += value[i].sum;
+};
+return rating_val;
+};
+
+var finalizer = function(key,rating_val){
+rating_val.avg = rating_val.sum/rating_val.count;
+return rating_val.avg;
+};
+
+
+
+
+
+

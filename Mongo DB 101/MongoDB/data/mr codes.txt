@@ -1,0 +1,24 @@
+var mapper1 = function(){ emit(this.Year,1); };
+var reducer1 = function(key,value){ return key,Array.sum(value); };
+db.movies.mapReduce( mapper1, reducer1, { out:"MovieCountsPerYear" })
+
+var mapper2 = function(){ emit(this.Rating,1); };
+var reducer2 = function(key,value){ return key,Array.sum(value); };
+db.movies.mapReduce( mapper1, reducer1, { out:"MovieCountsPerYear" })
+
+var mapper3 = function(){ var gen = this.Genre; var items = new Array(); items = gen.split('[]'); for (var i=0;i<items.length;i++){ emit(items[i],1); }};
+var reducer3 = function(key,value){ return key,Array.sum(value);};
+db.movies.mapReduce( mapper3,reducer3,{out:"GenreCounts"})
+
+var mapper4 = function(){ emit(this.MovieID,1); };
+var reducer4 = function(key,value){ return key,Array.sum(value); };
+db.tags.mapReduce( mapper4, reducer4, { out:"MostTaggedMovies" })
+
+
+var mapper5 = function(){ emit(this.IP,1); };
+var reducer5 = function(key,value){ return key,Array.sum(value); };
+db.access.mapReduce( mapper5, reducer5, { out:"AccessLogs" })
+
+var mapper6 = function(){var date = this.Date; emit(date.Month,1);};
+var reducer6 = function(key,value){ return key,Array.sum(value); };
+db.access.mapReduce(mapper6,reducer6,{out:"AccessLogs2"})

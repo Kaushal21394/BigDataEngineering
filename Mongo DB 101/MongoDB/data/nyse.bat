@@ -1,0 +1,1 @@
+FOR %%i IN (C:\Users\kaush\Documents\NetBeansProjects\MongoDB\data\NYSE\*.csv) DO mongoimport -d stocks -c nyse --type csv --headerline --file %%i

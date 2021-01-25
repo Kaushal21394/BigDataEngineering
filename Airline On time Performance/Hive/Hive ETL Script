@@ -1,0 +1,18 @@
+
+airlineRawData = LOAD '/AirArrivalDataSet/' 
+USING PigStorage(',') AS (Year:chararray, Month:chararray, DayofMonth:chararray, 
+DayOfWeek:chararray, DepTime:chararray, CRSDepTime:chararray, ArrTime:chararray, 
+CRSArrTime:chararray, UniqueCarrier:chararray, FlightNum:chararray, 
+TailNum:chararray, ActualElapsedTime:chararray, CRSElapsedTime:chararray, 
+AirTime:chararray, ArrDelay:int, DepDelay:int, Origin:chararray, Dest:chararray, 
+Distance:chararray, TaxiIn:chararray, TaxiOut:chararray, Cancelled:chararray, 
+CancellationCode:chararray, Diverted:chararray, CarrierDelay:chararray, 
+WeatherDelay:int, NASDelay:chararray, SecurityDelay:chararray, 
+LateAircraftDelay:chararray); 
+
+filtered_data = FILTER airlineRawData BY Year in ('2006','2007','2008');
+
+finalData = FOREACH filtered_data GENERATE Year, Month, UniqueCarrier,FlightNum,Origin,Dest,Cancelled,CancellationCode,Diverted;
+
+STORE finalData INTO '/Project/hiveInputData' USING org.apache.hive.hcatalog.pig .HCatStorer();
+

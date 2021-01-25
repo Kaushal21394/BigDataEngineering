@@ -1,0 +1,5 @@
+/home/kchaudhary/eclipse-workspace/NYSE_avg_stock_price/src/main/java/Hadoop/NYSE_avg_stock_price/AveragePriceReducer.java
+/home/kchaudhary/eclipse-workspace/NYSE_avg_stock_price/src/main/java/Hadoop/NYSE_avg_stock_price/App.java
+/home/kchaudhary/eclipse-workspace/NYSE_avg_stock_price/src/main/java/Hadoop/NYSE_avg_stock_price/CombinedFileInputFormat.java
+/home/kchaudhary/eclipse-workspace/NYSE_avg_stock_price/src/main/java/Hadoop/NYSE_avg_stock_price/AverageMapper.java
+/home/kchaudhary/eclipse-workspace/NYSE_avg_stock_price/src/main/java/Hadoop/NYSE_avg_stock_price/AveragePriceCombiner.java
